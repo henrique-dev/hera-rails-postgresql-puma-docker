@@ -10,13 +10,13 @@ hera/.bundle
 # Ignore all logfiles and tempfiles.
 hera/log/*
 hera/tmp/*
-!/log/.keep
-!/tmp/.keep
+!log/.keep
+!tmp/.keep
 
 # Ignore pidfiles, but keep the directory.
 hera/tmp/pids/*
-!/tmp/pids/
-!/tmp/pids/.keep
+!hera/tmp/pids/
+!hera/tmp/pids/.keep
 
 
 hera/public/assets

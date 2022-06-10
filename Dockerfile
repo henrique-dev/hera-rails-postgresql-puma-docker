@@ -22,6 +22,8 @@ RUN rm -rf node_modules vendor
 RUN gem install rails bundler
 RUN bundle install
 RUN chown -R user:user /opt/app
+RUN mkdir -p tmp/pids
+RUN touch tmp/pids/server.pid
 
 USER $USER_ID
 CMD ["bundle", "exec", "puma", "-C", "config/puma.rb"]
