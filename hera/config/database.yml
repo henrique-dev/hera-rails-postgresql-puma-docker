@@ -1,0 +1,22 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  host: postgresdb
+  username: postgres
+  password: password
+  pool: 5
+
+development:
+  <<: *default
+  database: hera_development
+
+
+test:
+  <<: *default
+  database: hera_test
+
+production:
+  <<: *default
+  database: hera_production
+  username: hera
+  password: <%= ENV["hera_DATABASE_PASSWORD"] %>

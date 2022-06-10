@@ -1,0 +1,77 @@
+version: '3.7'
+services:
+  postgresdb:
+    image: postgres
+    restart: always
+    ports:
+      - '5432'
+    volumes:
+      - postgresdb_data_container:/data/db
+    networks:
+      - backend-network
+    environment:
+      POSTGRES_PASSWORD: password
+  redis:
+    image: redis:5.0.7
+    ports:
+      - '6379'
+    networks:
+      - backend-network
+    volumes:
+      - redis_data_container:/var/lib/redis/data
+  hera:
+    build:
+      context: .
+      args:
+        USER_ID: "${USER_ID:-1000}"
+        GROUP_ID: "${GROUP_ID:-1000}"
+        TOKEN_GITHUB: "${TOKEN_GITHUB:-1000}"
+        USER_GITHUB: "${USER_GITHUB:-1000}"
+    volumes:
+      - ./hera:/opt/app
+    ports:
+      - '8010'
+    depends_on:
+      - redis
+      - postgresdb
+      - sidekiq
+    env_file:
+      - .env
+    networks:
+      - backend-network
+  sidekiq:
+    build:
+      context: .
+      args:
+        USER_ID: "${USER_ID:-1000}"
+        GROUP_ID: "${GROUP_ID:-1000}"
+        TOKEN_GITHUB: "${TOKEN_GITHUB:-1000}"
+        USER_GITHUB: "${USER_GITHUB:-1000}"
+    volumes:
+      - ./hera:/opt/app
+    command: bundle exec sidekiq
+    depends_on:
+      - redis
+      - postgresdb
+    env_file:
+      - .env
+    networks:
+      - backend-network
+  nginx:
+    build:
+      context: .
+      dockerfile: ./Dockerfile.nginx
+    networks:
+      - backend-network
+    ports:
+      - 'SETUP_PORT:SETUP_PORT'
+    depends_on:
+      - hera
+
+networks:
+  backend-network:
+    driver: bridge
+
+volumes:
+  postgresdb_data_container:
+  redis_data_container:

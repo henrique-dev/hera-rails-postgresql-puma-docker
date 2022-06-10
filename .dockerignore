@@ -1,0 +1,17 @@
+.git
+.gitignore
+.env
+hera/.bin
+hera/.bundleignore
+hera/.bundle
+hera/.byebug_history
+hera/.rspec
+hera/tmp
+hera/log
+hera/test
+hera/config/deploy
+hera/public/packs
+hera/public/packs-test
+hera/node_modules
+hera/yarn-error.log
+hera/coverage/

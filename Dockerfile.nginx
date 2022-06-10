@@ -1,0 +1,7 @@
+FROM nginx:latest
+RUN apt-get update -qq && apt-get -y install apache2-utils
+COPY reverse-proxy.conf /etc/nginx/conf.d/reverse-proxy.conf
+RUN mkdir -p /opt/app/log
+EXPOSE SETUP_PORT
+STOPSIGNAL SIGTERM
+CMD ["nginx", "-g", "daemon off;"]
