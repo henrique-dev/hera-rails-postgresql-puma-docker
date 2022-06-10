@@ -18,9 +18,9 @@ then
       mv "${FILE}" "${newfile}" ;
     done
 
-    find . -type f -not -path './setup.sh' -exec sed -i 's/'$SIMPLE_NAME'/'$NEW_SIMPLE_NAME'/' {} +
+    find . -type f -not -path './setup.sh' -exec sed -i 's/'$SIMPLE_NAME'/'$NEW_SIMPLE_NAME'/g' {} +
     find . -type f -not -path './setup.sh' -exec sed -i 's/'$CLASS_NAME'/'$NEW_CLASS_NAME'/g' {} +
-    find . -type f -not -path './setup.sh' -exec sed -i 's/'$PORT'/'$NEW_PORT'/' {} +
+    find . -type f -not -path './setup.sh' -exec sed -i 's/'$PORT'/'$NEW_PORT'/g' {} +
 
     echo "SELF DESTROYING SETUP"
     rm -- "$0"
