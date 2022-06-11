@@ -34,5 +34,9 @@ then
     git commit -m "change project name ${SIMPLE_NAME} to $1 and the port for $2"
     echo "git push"
     git push
+
+    docker-compose build
+    docker-compose run $NEW_SIMPLE_NAME rails db:create
+    docker-compose up
   fi
 fi
